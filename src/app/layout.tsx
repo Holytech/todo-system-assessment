@@ -4,6 +4,7 @@ import "./globals.css";
 import { Provider } from "@/module/lib/components/ui/provider";
 import { Box, Grid } from "@chakra-ui/react";
 import SideBar from "@/module/lib/components/SideBar/SideBar";
+import TopNav from "@/module/lib/components/TopNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,7 @@ export default function RootLayout({
           <Grid w="full" h="100vh" overflow="hidden" templateColumns="auto 1fr">
             <SideBar />
             <Box h="100vh">
-              {/* <TopNav /> */}
+              <TopNav />
               <Box h="full" overflow="hidden" bg="gray.50" px={5} pt={3} pb={8}>
                 {children}
               </Box>
