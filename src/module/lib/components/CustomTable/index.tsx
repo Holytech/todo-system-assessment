@@ -5,9 +5,15 @@ import {
   ButtonGroup,
   IconButton,
   Text,
+  Box,
+  SkeletonText,
+  StackSeparator,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import EmptyState from "./EmptyState";
+import TablePagination from "./Pagination";
+import { IPaginationProps } from "../../utility/types/pagination";
 
 // Define the item interface
 interface ProductItem {
@@ -31,14 +37,28 @@ const mockItems: ProductItem[] = [
   { id: 10, name: "Sunglasses", category: "Accessories", price: "$80" },
 ];
 
-interface CustomTableProps {
+interface CustomTableProps extends IPaginationProps {
   tableHeaders: string[];
   children: React.ReactNode;
+  isLoading: boolean;
+  emptyStateData: {
+    emptyStateHeader: string;
+    emptyStateParagraph: string;
+    callToAction?: React.ReactNode;
+  };
+  data: Record<string, unknown>[];
+  hasPagination?: boolean;
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({
   tableHeaders,
   children,
+  isLoading,
+  emptyStateData,
+  data,
+  hasPagination = true,
+  pagination,
+  setPagination,
 }) => {
   const pageSize = 5;
   const [page, setPage] = useState(1);
@@ -51,60 +71,58 @@ const CustomTable: React.FC<CustomTableProps> = ({
   );
 
   return (
-    <Stack gap={4} width={"full"}>
-      <Table.Root
-        width={"full"}
-        size="md"
-        variant="outline"
-        interactive
-        border={"solid 1px"}
-        borderColor={"#CDD6E9"}
-        borderRadius={"xl"}
-      >
-        <Table.Header bg={"#F7F7F7"}>
-          <Table.Row>
-            {tableHeaders?.map((head) => (
-              <Table.ColumnHeader
-                key={head}
-                color={"#1A1C1E"}
-                fontWeight={"semibold"}
-                px={"4"}
-                py={"6"}
-                border={"solid 1px #CDD6E9"}
-              >
-                {head}
-              </Table.ColumnHeader>
-            ))}
-          </Table.Row>
-        </Table.Header>
+    <>
+      {isLoading ? (
+        <Stack separator={<StackSeparator />}>
+          {[1, 2, 3, 4, 5, 6].map((each) => (
+            <SkeletonText noOfLines={1} key={each} />
+          ))}
+        </Stack>
+      ) : !data?.length && !isLoading ? (
+        <EmptyState
+          headingText={emptyStateData.emptyStateHeader}
+          pText={emptyStateData.emptyStateParagraph}
+          CTA={emptyStateData.callToAction}
+        />
+      ) : (
+        <Stack gap={4} width={"full"}>
+          <Table.Root
+            width={"full"}
+            size="md"
+            variant="outline"
+            interactive
+            border={"solid 1px"}
+            borderColor={"#CDD6E9"}
+            borderRadius={"xl"}
+          >
+            <Table.Header bg={"#F7F7F7"}>
+              <Table.Row>
+                {tableHeaders?.map((head) => (
+                  <Table.ColumnHeader
+                    key={head}
+                    color={"#1A1C1E"}
+                    fontWeight={"bold"}
+                    px={"4"}
+                    py={"6"}
+                    border={"solid 1px #CDD6E9"}
+                  >
+                    {head}
+                  </Table.ColumnHeader>
+                ))}
+              </Table.Row>
+            </Table.Header>
 
-        <Table.Body>{children}</Table.Body>
-      </Table.Root>
-
-      <Pagination.Root count={mockItems.length * 5} pageSize={5} page={1}>
-        <ButtonGroup variant="ghost" size="sm" wrap="wrap">
-          <Pagination.PrevTrigger asChild>
-            <IconButton>
-              <LuChevronLeft />
-            </IconButton>
-          </Pagination.PrevTrigger>
-
-          <Pagination.Items
-            render={(page) => (
-              <IconButton variant={{ base: "ghost", _selected: "outline" }}>
-                {page.value}
-              </IconButton>
-            )}
-          />
-
-          <Pagination.NextTrigger asChild>
-            <IconButton>
-              <LuChevronRight />
-            </IconButton>
-          </Pagination.NextTrigger>
-        </ButtonGroup>
-      </Pagination.Root>
-    </Stack>
+            <Table.Body>{children}</Table.Body>
+          </Table.Root>
+          {hasPagination && (
+            <TablePagination
+              pagination={pagination}
+              setPagination={setPagination}
+            />
+          )}
+        </Stack>
+      )}
+    </>
   );
 };
 
