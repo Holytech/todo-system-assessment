@@ -33,9 +33,9 @@ export default function RootLayout({
         <Provider>
           <Grid w="full" h="100vh" overflow="hidden" templateColumns="auto 1fr">
             <SideBar />
-            <Box h="100vh">
+            <Box h="100vh" display="flex" flexDirection="column">
               <TopNav />
-              <Box h="full" overflow="hidden" bg="gray.50" px={5} pt={3} pb={8}>
+              <Box flex="1" overflow="hidden" bg="gray.50" px={5} pt={3} pb={8}>
                 {children}
               </Box>
             </Box>
