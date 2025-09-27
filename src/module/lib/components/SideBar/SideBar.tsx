@@ -45,8 +45,7 @@ const SideBar = () => {
     <Box
       bg="white"
       p={5}
-      borderRight="1px"
-      borderColor="gray.200"
+      borderRight="solid 1px #cdd6e9"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
