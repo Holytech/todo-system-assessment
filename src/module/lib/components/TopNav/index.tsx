@@ -108,7 +108,7 @@ const TopNav = () => {
         ))}
       </HStack>
 
-      <HStack gap={2} flex="1" width={"fit"}>
+      <HStack gap={2} width={"fit"}>
         <Flex
           bg="gray.100"
           border="1px solid"
@@ -138,7 +138,7 @@ const TopNav = () => {
           {["VIM", "LMS", "BHV", "DataLek"].map((item) => (
             <Flex
               key={item}
-              bg="cyan.400"
+              bg="#75C5C1"
               color="white"
               px={2}
               py={1}
