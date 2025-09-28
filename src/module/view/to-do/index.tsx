@@ -13,7 +13,6 @@ import {
   ScrollArea,
   Table,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { AddCircle, Flag } from "iconsax-reactjs";
 import { useState } from "react";
