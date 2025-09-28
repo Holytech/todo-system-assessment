@@ -7,7 +7,15 @@ import {
 } from "iconsax-reactjs";
 import { IoFilter } from "react-icons/io5";
 
-const TodoHeader = () => {
+interface TodoHeaderProps {
+  setModal: React.Dispatch<
+    React.SetStateAction<{
+      open: boolean;
+    }>
+  >;
+}
+
+const TodoHeader: React.FC<TodoHeaderProps> = ({ setModal }) => {
   return (
     <Flex
       width={"full"}
@@ -76,7 +84,7 @@ const TodoHeader = () => {
           <Calendar size="32" color="#292D32" />
         </IconButton>
         <IconButton
-          aria-label="filter"
+          aria-label="export"
           variant={"outline"}
           border={"solid 2px #CDD6E933"}
           bg={"indigo"}
@@ -93,7 +101,7 @@ const TodoHeader = () => {
           <Text>Export xlsx</Text>
         </IconButton>
         <IconButton
-          aria-label="filter"
+          aria-label="add task"
           variant={"outline"}
           border={"solid 2px #CDD6E933"}
           bg={"#75C5C1"}
@@ -105,6 +113,7 @@ const TodoHeader = () => {
           alignItems={"center"}
           justifyContent={"center"}
           fontWeight={"bold"}
+          onClick={() => setModal({ open: true })}
         >
           <AddCircle size="32" color="#fff" />
           <Text>Add Task</Text>

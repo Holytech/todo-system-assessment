@@ -60,16 +60,6 @@ const CustomTable: React.FC<CustomTableProps> = ({
   pagination,
   setPagination,
 }) => {
-  const pageSize = 5;
-  const [page, setPage] = useState(1);
-
-  const totalPages = Math.ceil(mockItems.length / pageSize);
-
-  const paginatedItems = mockItems.slice(
-    (page - 1) * pageSize,
-    page * pageSize
-  );
-
   return (
     <>
       {isLoading ? (
@@ -91,8 +81,8 @@ const CustomTable: React.FC<CustomTableProps> = ({
             size="md"
             variant="outline"
             interactive
-            border={"solid 1px"}
-            borderColor={"#CDD6E9"}
+            border={"1px solid #CDD6E9"}
+            bg={"none"}
             borderRadius={"xl"}
           >
             <Table.Header bg={"#F7F7F7"}>
